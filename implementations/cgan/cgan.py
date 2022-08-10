@@ -1,3 +1,4 @@
+#代码解读 https://zhuanlan.zhihu.com/p/149788269
 import argparse
 import os
 import numpy as np
@@ -41,7 +42,7 @@ class Generator(nn.Module):
         super(Generator, self).__init__()
 
         self.label_emb = nn.Embedding(opt.n_classes, opt.n_classes)
-        #embedding 转化label 为可合并项 再与输入合并 ！！！！!
+        #embedding 转化label 为可合并项 再与输入合并 
 
         def block(in_feat, out_feat, normalize=True):
             layers = [nn.Linear(in_feat, out_feat)]
@@ -56,7 +57,7 @@ class Generator(nn.Module):
             *block(256, 512),
             *block(512, 1024),
             nn.Linear(1024, int(np.prod(img_shape))),
-            nn.Tanh()
+            nn.Tanh()    #为何用tanh?
         )
 
     def forward(self, noise, labels):
